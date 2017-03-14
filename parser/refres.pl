@@ -318,16 +318,25 @@ resolve_all_anaphors(drs(ReferentsIn, [Condition|Conditions]), ConditionsAllIn, 
       Condition = ~ drs(ReferentsNIn, ConditionsNIn)
     ;
       % possibility
-      Condition = can(drs(ReferentsNIn, ConditionsNIn))
+      Condition = poss(drs(ReferentsNIn, ConditionsNIn))
     ;
       % necessity
-      Condition = must(drs(ReferentsNIn, ConditionsNIn))
+      Condition = nec(drs(ReferentsNIn, ConditionsNIn))
     ;
       % recommendation
       Condition = should(drs(ReferentsNIn, ConditionsNIn))
     ;
       % admissibility
       Condition = may(drs(ReferentsNIn, ConditionsNIn))
+    ;
+      % obligation
+      Condition = obl(drs(ReferentsNIn, ConditionsNIn))
+    ;
+      % prohibition
+      Condition = pro(drs(ReferentsNIn, ConditionsNIn))
+    ;
+      % permission
+      Condition = per(drs(ReferentsNIn, ConditionsNIn))
     ;
       % single question
       Condition = question(drs(ReferentsNIn, ConditionsNIn))
@@ -1213,16 +1222,16 @@ match_elements([Element|Elements], Set) :-
     match_elements(Conditions2, Conditions1)
   ;
     % complex condition: possibility
-    Element = can(drs(_Referents1, Conditions1))
+    Element = poss(drs(_Referents1, Conditions1))
     ->
-    member(can(drs(_Referents2, Conditions2)), Set),
+    member(poss(drs(_Referents2, Conditions2)), Set),
     match_elements(Conditions1, Conditions2),
     match_elements(Conditions2, Conditions1)
   ;
     % complex condition: necessity
-    Element = must(drs(_Referents1, Conditions1))
+    Element = nec(drs(_Referents1, Conditions1))
     ->
-    member(must(drs(_Referents2, Conditions2)), Set),
+    member(nec(drs(_Referents2, Conditions2)), Set),
     match_elements(Conditions1, Conditions2),
     match_elements(Conditions2, Conditions1)
   ;
@@ -1237,6 +1246,27 @@ match_elements([Element|Elements], Set) :-
     Element = may(drs(_Referents1, Conditions1))
     ->
     member(may(drs(_Referents2, Conditions2)), Set),
+    match_elements(Conditions1, Conditions2),
+    match_elements(Conditions2, Conditions1)
+  ;
+    % complex condition: obligation
+    Element = obl(drs(_Referents1, Conditions1))
+    ->
+    member(obl(drs(_Referents2, Conditions2)), Set),
+    match_elements(Conditions1, Conditions2),
+    match_elements(Conditions2, Conditions1)
+  ;
+    % complex condition: prohibition
+    Element = pro(drs(_Referents1, Conditions1))
+    ->
+    member(pro(drs(_Referents2, Conditions2)), Set),
+    match_elements(Conditions1, Conditions2),
+    match_elements(Conditions2, Conditions1)
+  ;
+    % complex condition: permission
+    Element = per(drs(_Referents1, Conditions1))
+    ->
+    member(per(drs(_Referents2, Conditions2)), Set),
     match_elements(Conditions1, Conditions2),
     match_elements(Conditions2, Conditions1)
   ;

@@ -171,7 +171,7 @@ noncopula > [itr, tr, ditr].
 wh > [r, not_r].
 not_r > [q, no_wh].
 
-modality > [no_modality, poss, nec, rec, ad].
+modality > [no_modality, poss, nec, rec, ad, obl, pro, per].
 
 subjobj > [subj, obj].
 

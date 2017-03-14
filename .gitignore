@@ -1,3 +1,5 @@
 /ape.exe
 /ape-*.zip
 /packages
+*.toc
+*.html

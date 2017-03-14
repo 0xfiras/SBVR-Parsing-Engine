@@ -90,6 +90,7 @@ adj_itr(new, new).
 adj_itr(nice, nice).
 adj_itr(numb, numb).
 adj_itr(numeric, numeric).
+adj_itr(obligatory, obligatory).
 adj_itr(old, old).
 adj_itr(only, only).
 adj_itr(open, open).
@@ -97,6 +98,7 @@ adj_itr(owned, owned).
 adj_itr(permitted, permitted).
 adj_itr(personal, personal).
 adj_itr(provable, provable).
+adj_itr(prohibited, prohibited).
 adj_itr(public, public).
 adj_itr(quick, quick).
 adj_itr(raw, raw).

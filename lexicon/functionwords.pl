@@ -86,8 +86,12 @@ functionword(less).
 functionword(but).
 functionword(true).
 functionword(false).
+functionword(impossible).
 functionword(possible).
 functionword(necessary).
+functionword(obligatory).
+functionword(permitted).
+functionword(prohibited).
 functionword(recommended).
 functionword(admissible).
 functionword('-thing').

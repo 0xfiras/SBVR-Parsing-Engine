@@ -43,7 +43,7 @@
 
 %-151--------------------------------------------------------------------------
 % Aux -->
-%	( do | does | are | is | be | must | can | should | may )
+%	( do | does | are | is | be | must | can )
 %------------------------------------------------------------------------------
 
 aux(
@@ -120,21 +120,21 @@ aux(
 	get_position(TID),
 	word_capitalize(can, 'Can').
 
-aux(
-		display!tree!should &
-		syn!head!aux!<should &
-		drs!tid!TID
-	) -->
-	get_position(TID),
-	word_capitalize(should, 'Should').
+%aux(
+%		display!tree!should &
+%		syn!head!aux!<should &
+%		drs!tid!TID
+%	) -->
+%	get_position(TID),
+%	word_capitalize(should, 'Should').
 
-aux(
-		display!tree!may &
-		syn!head!aux!<may &
-		drs!tid!TID
-	) -->
-	get_position(TID),
-	word_capitalize(may, 'May').
+%aux(
+%		display!tree!may &
+%		syn!head!aux!<may &
+%		drs!tid!TID
+%	) -->
+%	get_position(TID),
+%	word_capitalize(may, 'May').
 
 aux(
 		display!tree![] &
@@ -294,7 +294,7 @@ aux_rest(
 		syn!head!modality!<nec &
 		syn!head!aux!<must &
 		drs!in!drs(Dom, Conds) &
-		drs!out!drs(Dom, [must(DrsScope) | Conds]) &
+		drs!out!drs(Dom, [nec(DrsScope) | Conds]) &
 		drs!scope!in!drs([], []) &
 		drs!scope!out!DrsScope
 	) --> [].
@@ -309,7 +309,7 @@ aux_rest(
 		syn!head!modality!<nec &
 		syn!head!aux!<empty_aux &
 		drs!in!drs(Dom, Conds) &
-		drs!out!drs(Dom, [must(DrsScope) | Conds]) &
+		drs!out!drs(Dom, [nec(DrsScope) | Conds]) &
 		drs!scope!in!drs([], []) &
 		drs!scope!out!DrsScope
 	) -->
@@ -326,7 +326,7 @@ aux_rest(
 		syn!head!modality!<nec &
 		syn!head!aux!<empty_aux &
 		drs!in!drs(Dom, Conds) &
-		drs!out!drs(Dom, [must(DrsScope) | Conds]) &
+		drs!out!drs(Dom, [nec(DrsScope) | Conds]) &
 		drs!scope!in!drs([], []) &
 		drs!scope!out!DrsScope
 	) -->
@@ -343,7 +343,7 @@ aux_rest(
 		syn!head!modality!<nec &
 		syn!head!aux!<do &
 		drs!in!drs(Dom, Conds) &
-		drs!out!drs(Dom, [must(DrsScope) | Conds]) &
+		drs!out!drs(Dom, [nec(DrsScope) | Conds]) &
 		drs!scope!in!drs([], []) &
 		drs!scope!out!DrsScope
 	) -->
@@ -360,7 +360,7 @@ aux_rest(
 		syn!head!modality!<nec &
 		syn!head!aux!<do &
 		drs!in!drs(Dom, Conds) &
-		drs!out!drs(Dom, [-drs([], [must(DrsScope)]) | Conds] ) &
+		drs!out!drs(Dom, [-drs([], [nec(DrsScope)]) | Conds] ) &
 		drs!scope!in!drs([], []) &
 		drs!scope!out!DrsScope
 	) -->
@@ -377,7 +377,7 @@ aux_rest(
 		syn!head!modality!<nec &
 		syn!head!aux!<must &
 		drs!in!drs(Dom, Conds) &
-		drs!out!drs(Dom, [must(DrsScope) | Conds]) &
+		drs!out!drs(Dom, [nec(DrsScope) | Conds]) &
 		drs!scope!in!drs([], []) &
 		drs!scope!out!DrsScope
 	) -->
@@ -393,7 +393,7 @@ aux_rest(
 		syn!head!modality!<nec &
 		syn!head!aux!<empty_aux &
 		drs!in!drs(Dom, Conds) &
-		drs!out!drs(Dom, [must(DrsScope) | Conds]) &
+		drs!out!drs(Dom, [nec(DrsScope) | Conds]) &
 		drs!scope!in!drs([], []) &
 		drs!scope!out!DrsScope
 	) -->
@@ -411,7 +411,7 @@ aux_rest(
 		syn!head!modality!<nec &
 		syn!head!aux!<empty_aux &
 		drs!in!drs(Dom, Conds) &
-		drs!out!drs(Dom, [must(DrsScope) | Conds]) &
+		drs!out!drs(Dom, [nec(DrsScope) | Conds]) &
 		drs!scope!in!drs([], []) &
 		drs!scope!out!DrsScope
 	) -->
@@ -429,7 +429,7 @@ aux_rest(
 		syn!head!modality!<nec &
 		syn!head!aux!<do &
 		drs!in!drs(Dom, Conds) &
-		drs!out!drs(Dom, [must(DrsScope) | Conds]) &
+		drs!out!drs(Dom, [nec(DrsScope) | Conds]) &
 		drs!scope!in!drs([], []) &
 		drs!scope!out!DrsScope
 	) -->
@@ -447,7 +447,7 @@ aux_rest(
 		syn!head!modality!<nec &
 		syn!head!aux!<do &
 		drs!in!drs(Dom, Conds) &
-		drs!out!drs(Dom, [-drs([], [must(DrsScope)]) | Conds] ) &
+		drs!out!drs(Dom, [-drs([], [nec(DrsScope)]) | Conds] ) &
 		drs!scope!in!drs([], []) &
 		drs!scope!out!DrsScope
 	) -->
@@ -465,7 +465,7 @@ aux_rest(
 		syn!head!modality!<poss &
 		syn!head!aux!<can &
 		drs!in!drs(Dom, Conds) &
-		drs!out!drs(Dom, [can(DrsScope) | Conds]) &
+		drs!out!drs(Dom, [poss(DrsScope) | Conds]) &
 		drs!scope!in!drs([], []) &
 		drs!scope!out!DrsScope
 	) --> [].
@@ -479,7 +479,7 @@ aux_rest(
 		syn!head!modality!<poss &
 		syn!head!aux!<can &
 		drs!in!drs(Dom, Conds) &
-		drs!out!drs(Dom, [can(DrsScope) | Conds]) &
+		drs!out!drs(Dom, [poss(DrsScope) | Conds]) &
 		drs!scope!in!drs([], []) &
 		drs!scope!out!DrsScope
 	) -->
@@ -494,7 +494,7 @@ aux_rest(
 		syn!head!modality!<poss &
 		syn!head!aux!<can &
 		drs!in!drs(Dom, Conds) &
-		drs!out!drs(Dom, [-drs([], [can(DrsScope)]) | Conds] ) &
+		drs!out!drs(Dom, [-drs([], [poss(DrsScope)]) | Conds] ) &
 		drs!scope!in!drs([], []) &
 		drs!scope!out!DrsScope
 	) -->
@@ -509,7 +509,7 @@ aux_rest(
 		syn!head!modality!<poss &
 		syn!head!aux!<can &
 		drs!in!drs(Dom, Conds) &
-		drs!out!drs(Dom, [-drs([], [can(DrsScope)]) | Conds] ) &
+		drs!out!drs(Dom, [-drs([], [poss(DrsScope)]) | Conds] ) &
 		drs!scope!in!drs([], []) &
 		drs!scope!out!DrsScope
 	) -->
@@ -517,124 +517,124 @@ aux_rest(
 	word_noninitial(be).
 
 % [should]
-aux_rest(
-		display!tree![] &
-		syn!head!negation!<minus &
-		syn!head!naf!<minus &
-		syn!head!be!<minus &
-		syn!head!modality!<rec &
-		syn!head!aux!<should &
-		drs!in!drs(Dom, Conds) &
-		drs!out!drs(Dom, [should(DrsScope) | Conds]) &
-		drs!scope!in!drs([], []) &
-		drs!scope!out!DrsScope
-	) --> [].
+%aux_rest(
+%		display!tree![] &
+%		syn!head!negation!<minus &
+%		syn!head!naf!<minus &
+%		syn!head!be!<minus &
+%		syn!head!modality!<rec &
+%		syn!head!aux!<should &
+%		drs!in!drs(Dom, Conds) &
+%		drs!out!drs(Dom, [should(DrsScope) | Conds]) &
+%		drs!scope!in!drs([], []) &
+%		drs!scope!out!DrsScope
+%	) --> [].
 
 % [should] be
-aux_rest(
-		display!tree!be &
-		syn!head!negation!<minus &
-		syn!head!naf!<minus &
-		syn!head!be!<plus &
-		syn!head!modality!<rec &
-		syn!head!aux!<should &
-		drs!in!drs(Dom, Conds) &
-		drs!out!drs(Dom, [should(DrsScope) | Conds]) &
-		drs!scope!in!drs([], []) &
-		drs!scope!out!DrsScope
-	) -->
-	word_noninitial(be).
+%aux_rest(
+%		display!tree!be &
+%		syn!head!negation!<minus &
+%		syn!head!naf!<minus &
+%		syn!head!be!<plus &
+%		syn!head!modality!<rec &
+%		syn!head!aux!<should &
+%		drs!in!drs(Dom, Conds) &
+%		drs!out!drs(Dom, [should(DrsScope) | Conds]) &
+%		drs!scope!in!drs([], []) &
+%		drs!scope!out!DrsScope
+%	) -->
+%	word_noninitial(be).
 
 % [should] not
-aux_rest(
-		display!tree!not &
-		syn!head!negation!<plus &
-		syn!head!naf!<minus &
-		syn!head!be!<minus &
-		syn!head!modality!<rec &
-		syn!head!aux!<should &
-		drs!in!drs(Dom, Conds) &
-		drs!out!drs(Dom, [-drs([], [should(DrsScope)]) | Conds] ) &
-		drs!scope!in!drs([], []) &
-		drs!scope!out!DrsScope
-	) -->
-	word_noninitial(not).
+%aux_rest(
+%		display!tree!not &
+%		syn!head!negation!<plus &
+%		syn!head!naf!<minus &
+%		syn!head!be!<minus &
+%		syn!head!modality!<rec &
+%		syn!head!aux!<should &
+%		drs!in!drs(Dom, Conds) &
+%		drs!out!drs(Dom, [-drs([], [should(DrsScope)]) | Conds] ) &
+%		drs!scope!in!drs([], []) &
+%		drs!scope!out!DrsScope
+%	) -->
+%	word_noninitial(not).
 
 % [should] not be
-aux_rest(
-		display!tree!'not be' &
-		syn!head!negation!<plus &
-		syn!head!naf!<minus &
-		syn!head!be!<plus &
-		syn!head!modality!<rec &
-		syn!head!aux!<should &
-		drs!in!drs(Dom, Conds) &
-		drs!out!drs(Dom, [-drs([], [should(DrsScope)]) | Conds] ) &
-		drs!scope!in!drs([], []) &
-		drs!scope!out!DrsScope
-	) -->
-	word_noninitial(not),
-	word_noninitial(be).
+%aux_rest(
+%		display!tree!'not be' &
+%		syn!head!negation!<plus &
+%		syn!head!naf!<minus &
+%		syn!head!be!<plus &
+%		syn!head!modality!<rec &
+%		syn!head!aux!<should &
+%		drs!in!drs(Dom, Conds) &
+%		drs!out!drs(Dom, [-drs([], [should(DrsScope)]) | Conds] ) &
+%		drs!scope!in!drs([], []) &
+%		drs!scope!out!DrsScope
+%	) -->
+%	word_noninitial(not),
+%	word_noninitial(be).
 
 % [may]
-aux_rest(
-		display!tree![] &
-		syn!head!negation!<minus &
-		syn!head!naf!<minus &
-		syn!head!be!<minus &
-		syn!head!modality!<ad &
-		syn!head!aux!<may &
-		drs!in!drs(Dom, Conds) &
-		drs!out!drs(Dom, [may(DrsScope) | Conds]) &
-		drs!scope!in!drs([], []) &
-		drs!scope!out!DrsScope
-	) --> [].
+%aux_rest(
+%		display!tree![] &
+%		syn!head!negation!<minus &
+%		syn!head!naf!<minus &
+%		syn!head!be!<minus &
+%		syn!head!modality!<ad &
+%		syn!head!aux!<may &
+%		drs!in!drs(Dom, Conds) &
+%		drs!out!drs(Dom, [may(DrsScope) | Conds]) &
+%		drs!scope!in!drs([], []) &
+%		drs!scope!out!DrsScope
+%	) --> [].
 
 % [may] be
-aux_rest(
-		display!tree!be &
-		syn!head!negation!<minus &
-		syn!head!naf!<minus &
-		syn!head!be!<plus &
-		syn!head!modality!<ad &
-		syn!head!aux!<may &
-		drs!in!drs(Dom, Conds) &
-		drs!out!drs(Dom, [may(DrsScope) | Conds]) &
-		drs!scope!in!drs([], []) &
-		drs!scope!out!DrsScope
-	) -->
-	word_noninitial(be).
+%aux_rest(
+%		display!tree!be &
+%		syn!head!negation!<minus &
+%		syn!head!naf!<minus &
+%		syn!head!be!<plus &
+%		syn!head!modality!<ad &
+%		syn!head!aux!<may &
+%		drs!in!drs(Dom, Conds) &
+%		drs!out!drs(Dom, [may(DrsScope) | Conds]) &
+%		drs!scope!in!drs([], []) &
+%		drs!scope!out!DrsScope
+%	) -->
+%	word_noninitial(be).
 
 % [may] not
-aux_rest(
-		display!tree!not &
-		syn!head!negation!<plus &
-		syn!head!naf!<minus &
-		syn!head!be!<minus &
-		syn!head!modality!<ad &
-		syn!head!aux!<may &
-		drs!in!drs(Dom, Conds) &
-		drs!out!drs(Dom, [-drs([], [may(DrsScope)]) | Conds] ) &
-		drs!scope!in!drs([], []) &
-		drs!scope!out!DrsScope
-	) -->
-	word_noninitial(not).
+%aux_rest(
+%		display!tree!not &
+%		syn!head!negation!<plus &
+%		syn!head!naf!<minus &
+%		syn!head!be!<minus &
+%		syn!head!modality!<ad &
+%		syn!head!aux!<may &
+%		drs!in!drs(Dom, Conds) &
+%		drs!out!drs(Dom, [-drs([], [may(DrsScope)]) | Conds] ) &
+%		drs!scope!in!drs([], []) &
+%		drs!scope!out!DrsScope
+%	) -->
+%	word_noninitial(not).
 
 % [may] not be  |<<
-aux_rest(
-		display!tree!'not be' &
-		syn!head!negation!<plus &
-		syn!head!naf!<minus &
-		syn!head!be!<plus &
-		syn!head!modality!<ad &
-		syn!head!aux!<may &
-		drs!in!drs(Dom, Conds) &
-		drs!out!drs(Dom, [-drs([], [may(DrsScope)]) | Conds] ) &
-		drs!scope!in!drs([], []) &
-		drs!scope!out!DrsScope
-	) -->
-	word_noninitial(not),
-	word_noninitial(be).
+%aux_rest(
+%		display!tree!'not be' &
+%		syn!head!negation!<plus &
+%		syn!head!naf!<minus &
+%		syn!head!be!<plus &
+%		syn!head!modality!<ad &
+%		syn!head!aux!<may &
+%		drs!in!drs(Dom, Conds) &
+%		drs!out!drs(Dom, [-drs([], [may(DrsScope)]) | Conds] ) &
+%		drs!scope!in!drs([], []) &
+%		drs!scope!out!DrsScope
+%	) -->
+%	word_noninitial(not),
+%	word_noninitial(be).
 
 
 %-154--------------------------------------------------------------------------
@@ -1368,9 +1368,9 @@ generalised_quantor(
 
 %-161--------------------------------------------------------------------------
 % SentenceInit -->
-%	it is false | it is not true | it is possible | it is not possible |
-%	it is necessary | it is not necessary | it is not provable | it is true |
-%	it is not false
+%	it is false | it is not true | it is possible | it is impossible |
+%	it is necessary | it is not provable | it is true |
+%	it is not false | it is obligatory | it is prohibited | it is permitted 
 %
 % Example: it is false [that ...]
 % Example: it is not true [that ...]
@@ -1423,97 +1423,108 @@ sentence_init(
 	word_noninitial(not),
 	word_noninitial(true).
 
-sentence_init(
-		display!tree![poss, 'it is possible'] &
-		drs!in!drs(Dom, Conds) &
-		drs!out!drs(Dom, [can(ScopeOut)|Conds]) &
-		drs!scope!in!drs([], []) &
-		drs!scope!out!ScopeOut
-	) -->
-	word_capitalize(it, 'It'),
-	word_noninitial(is),
-	word_noninitial(possible).
-
-sentence_init(
-		display!tree![impossibility, 'it is not possible'] &
-		drs!in!drs(Dom, Conds) &
-		drs!out!drs(Dom, [-drs([], [can(ScopeOut)])|Conds]) &
-		drs!scope!in!drs([], []) &
-		drs!scope!out!ScopeOut
-	) -->
-	word_capitalize(it, 'It'),
-	word_noninitial(is),
-	word_noninitial(not),
-	word_noninitial(possible).
+%sentence_init(
+%		display!tree![impossibility, 'it is not possible'] &
+%		drs!in!drs(Dom, Conds) &
+%		drs!out!drs(Dom, [-drs([], [poss(ScopeOut)])|Conds]) &
+%		drs!scope!in!drs([], []) &
+%		drs!scope!out!ScopeOut
+%	) -->
+%	word_capitalize(it, 'It'),
+%	word_noninitial(is),
+%	word_noninitial(not),
+%	word_noninitial(possible).
 
 sentence_init(
 		display!tree![necessity, 'it is necessary'] &
 		drs!in!drs(Dom, Conds) &
-		drs!out!drs(Dom, [must(ScopeOut)|Conds]) &
+		drs!out!drs(Dom, [nec(ScopeOut)|Conds]) &
 		drs!scope!in!drs([], []) &
 		drs!scope!out!ScopeOut
 	) -->
 	word_capitalize(it, 'It'),
 	word_noninitial(is),
 	word_noninitial(necessary).
-
+  
 sentence_init(
-		display!tree![unnecessity, 'it is not necessary'] &
+		display!tree![poss, 'it is possible'] &
 		drs!in!drs(Dom, Conds) &
-		drs!out!drs(Dom, [-drs([], [must(ScopeOut)])|Conds]) &
+		drs!out!drs(Dom, [poss(ScopeOut)|Conds]) &
 		drs!scope!in!drs([], []) &
 		drs!scope!out!ScopeOut
 	) -->
 	word_capitalize(it, 'It'),
 	word_noninitial(is),
-	word_noninitial(not),
-	word_noninitial(necessary).
+	word_noninitial(possible).
 
 sentence_init(
-		display!tree![recommendation, 'it is recommended'] &
+		display!tree![impossibility, 'it is impossible'] &
 		drs!in!drs(Dom, Conds) &
-		drs!out!drs(Dom, [should(ScopeOut)|Conds]) &
+		drs!out!drs(Dom, [nec(drs([], [-ScopeOut]))|Conds]) &
 		drs!scope!in!drs([], []) &
 		drs!scope!out!ScopeOut
 	) -->
 	word_capitalize(it, 'It'),
 	word_noninitial(is),
-	word_noninitial(recommended).
+	word_noninitial(impossible).
 
-sentence_init(
-		display!tree![recommendation, 'it is not recommended'] &
-		drs!in!drs(Dom, Conds) &
-		drs!out!drs(Dom, [-drs([], [should(ScopeOut)])|Conds]) &
-		drs!scope!in!drs([], []) &
-		drs!scope!out!ScopeOut
-	) -->
-	word_capitalize(it, 'It'),
-	word_noninitial(is),
-	word_noninitial(not),
-	word_noninitial(recommended).
+%sentence_init(
+%		display!tree![unnecessity, 'it is not necessary'] &
+%		drs!in!drs(Dom, Conds) &
+%		drs!out!drs(Dom, [-drs([], [nec(ScopeOut)])|Conds]) &
+%		drs!scope!in!drs([], []) &
+%		drs!scope!out!ScopeOut
+%	) -->
+%	word_capitalize(it, 'It'),
+%	word_noninitial(is),
+%	word_noninitial(not),
+%	word_noninitial(necessary).
 
-sentence_init(
-		display!tree![admissibility, 'it is admissible'] &
-		drs!in!drs(Dom, Conds) &
-		drs!out!drs(Dom, [may(ScopeOut)|Conds]) &
-		drs!scope!in!drs([], []) &
-		drs!scope!out!ScopeOut
-	) -->
-	word_capitalize(it, 'It'),
-	word_noninitial(is),
-	word_noninitial(admissible).
+%sentence_init(
+%		display!tree![recommendation, 'it is recommended'] &
+%		drs!in!drs(Dom, Conds) &
+%		drs!out!drs(Dom, [should(ScopeOut)|Conds]) &
+%		drs!scope!in!drs([], []) &
+%		drs!scope!out!ScopeOut
+%	) -->
+%	word_capitalize(it, 'It'),
+%	word_noninitial(is),
+%	word_noninitial(recommended).
 
-sentence_init(
-		display!tree![admissibility, 'it is not admissible'] &
-		drs!in!drs(Dom, Conds) &
-		drs!out!drs(Dom, [-drs([], [may(ScopeOut)])|Conds]) &
-		drs!scope!in!drs([], []) &
-		drs!scope!out!ScopeOut
-	) -->
-	word_capitalize(it, 'It'),
-	word_noninitial(is),
-	word_noninitial(not),
-	word_noninitial(admissible).
+%sentence_init(
+%		display!tree![recommendation, 'it is not recommended'] &
+%		drs!in!drs(Dom, Conds) &
+%		drs!out!drs(Dom, [-drs([], [should(ScopeOut)])|Conds]) &
+%		drs!scope!in!drs([], []) &
+%		drs!scope!out!ScopeOut
+%	) -->
+%	word_capitalize(it, 'It'),
+%	word_noninitial(is),
+%	word_noninitial(not),
+%	word_noninitial(recommended).
+
+%sentence_init(
+%		display!tree![admissibility, 'it is admissible'] &
+%		drs!in!drs(Dom, Conds) &
+%		drs!out!drs(Dom, [may(ScopeOut)|Conds]) &
+%		drs!scope!in!drs([], []) &
+%		drs!scope!out!ScopeOut
+%	) -->
+%	word_capitalize(it, 'It'),
+%	word_noninitial(is),
+%	word_noninitial(admissible).
+
+%sentence_init(
+%		display!tree![admissibility, 'it is not admissible'] &
+%		drs!in!drs(Dom, Conds) &
+%		drs!out!drs(Dom, [-drs([], [may(ScopeOut)])|Conds]) &
+%		drs!scope!in!drs([], []) &
+%		drs!scope!out!ScopeOut
+%	) -->
+%	word_capitalize(it, 'It'),
+%	word_noninitial(is),
+%	word_noninitial(not),
+%	word_noninitial(admissible).
 
 sentence_init(
 		display!tree![naf, 'it is not provable'] &
@@ -1526,6 +1537,39 @@ sentence_init(
 	word_noninitial(is),
 	word_noninitial(not),
 	word_noninitial(provable).
+  
+sentence_init(
+		display!tree![obligation, 'it is obligatory'] &
+		drs!in!drs(Dom, Conds) &
+		drs!out!drs(Dom, [obl(ScopeOut)|Conds]) &
+		drs!scope!in!drs([], []) &
+		drs!scope!out!ScopeOut
+	) -->
+	word_capitalize(it, 'It'),
+	word_noninitial(is),
+	word_noninitial(obligatory).
+  
+sentence_init(
+		display!tree![prohibition, 'it is prohibited'] &
+		drs!in!drs(Dom, Conds) &
+		drs!out!drs(Dom, [obl(drs([], [-ScopeOut]))|Conds]) &
+		drs!scope!in!drs([], []) &
+		drs!scope!out!ScopeOut
+	) -->
+	word_capitalize(it, 'It'),
+	word_noninitial(is),
+	word_noninitial(prohibited).
+  
+sentence_init(
+		display!tree![permission, 'it is permitted'] &
+		drs!in!drs(Dom, Conds) &
+		drs!out!drs(Dom, [per(ScopeOut)|Conds]) &
+		drs!scope!in!drs([], []) &
+		drs!scope!out!ScopeOut
+	) -->
+	word_capitalize(it, 'It'),
+	word_noninitial(is),
+	word_noninitial(permitted).
 
 
 %-162--------------------------------------------------------------------------
