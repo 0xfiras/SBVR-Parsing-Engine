@@ -95,6 +95,7 @@ argument('-cowlfsspp', '', 'Output OWL/SWRL in the Functional-Style Syntax repre
 argument('-cowlxml', '', 'Output OWL/SWRL in the XML representation.').
 argument('-cowlrdf', '', 'Output OWL/SWRL in the RDF/XML representation. DEPRECATED').
 argument('-cruleml', '', 'Output RuleML representation of the DRS.').
+argument('-chomlruleml', '', 'Output HOML RuleML representation of the DRS.').
 argument('-cfol', '', 'Output standard first-order logic representations (default form) of the DRS as a Prolog term.').
 argument('-cpnf', '', 'Output standard first-order logic representations (prenex normal form) of the DRS as a Prolog term.').
 argument('-ctptp', '', 'Output TPTP representation of the DRS.').
@@ -432,6 +433,7 @@ parameters([
 	cowlrdf(_,      [oneof([on, off]), optional(true)]),
 	cowlxml(_,      [oneof([on, off]), optional(true)]),
 	cruleml(_,      [oneof([on, off]), optional(true)]),
+  chomlruleml(_,  [oneof([on, off]), optional(true)]),
 	cfol(_,         [oneof([on, off]), optional(true)]),
 	ctptp(_,        [oneof([on, off]), optional(true)]),
 	solo(_,         [oneof([drs, drsxml, drspp, drshtml,
@@ -439,7 +441,7 @@ parameters([
 					tokens, sentences,
 					syntax, syntaxpp, syntaxd, syntaxdpp,
 					owlfss, owlfsspp, owlrdf, owlxml,
-					ruleml,
+					ruleml, homlruleml,
 					fol, pnf, tptp]), optional(true)])
 ]).
 

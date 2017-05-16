@@ -80,6 +80,7 @@ get_ape_results([text='Peeter likes Mary.', solo=owlfss], ContentType, Content).
 :- use_module(ape('utils/drs_to_npace')).
 :- use_module(ape('utils/drs_to_html')).
 :- use_module(ape('utils/drs_to_ruleml')).
+:- use_module(ape('utils/drs_to_homl_ruleml')).
 :- use_module(ape('utils/tree_utils')).
 :- use_module(ape('utils/trees_to_ascii')).
 :- use_module(ape('utils/drs_to_tptp')).
@@ -221,6 +222,7 @@ output_type(owlfss).
 output_type(owlfsspp).
 output_type(owlxml).
 output_type(ruleml).
+output_type(homlruleml).
 output_type(fol).
 output_type(pnf).
 output_type(tptp).
@@ -389,6 +391,12 @@ get_output(paraphrase2, TempResult, 'text/plain', Output) :-
 get_output(ruleml, TempResult, 'text/xml', Output) :-
     get_value(TempResult, drs, Drs),
 	drs_to_ruleml:drs_to_ruleml(Drs, Ruleml),
+	xmlterm_to_xmlatom([Ruleml], Output),
+    !.
+
+get_output(homlruleml, TempResult, 'text/xml', Output) :-
+    get_value(TempResult, drs, Drs),
+	drs_to_homl_ruleml:drs_to_homl_ruleml(Drs, Ruleml),
 	xmlterm_to_xmlatom([Ruleml], Output),
     !.
 

@@ -294,7 +294,7 @@ aux_rest(
 		syn!head!modality!<nec &
 		syn!head!aux!<must &
 		drs!in!drs(Dom, Conds) &
-		drs!out!drs(Dom, [nec(DrsScope) | Conds]) &
+		drs!out!drs(Dom, [obl(DrsScope) | Conds]) &
 		drs!scope!in!drs([], []) &
 		drs!scope!out!DrsScope
 	) --> [].
@@ -309,7 +309,7 @@ aux_rest(
 		syn!head!modality!<nec &
 		syn!head!aux!<empty_aux &
 		drs!in!drs(Dom, Conds) &
-		drs!out!drs(Dom, [nec(DrsScope) | Conds]) &
+		drs!out!drs(Dom, [obl(DrsScope) | Conds]) &
 		drs!scope!in!drs([], []) &
 		drs!scope!out!DrsScope
 	) -->
@@ -326,7 +326,7 @@ aux_rest(
 		syn!head!modality!<nec &
 		syn!head!aux!<empty_aux &
 		drs!in!drs(Dom, Conds) &
-		drs!out!drs(Dom, [nec(DrsScope) | Conds]) &
+		drs!out!drs(Dom, [obl(DrsScope) | Conds]) &
 		drs!scope!in!drs([], []) &
 		drs!scope!out!DrsScope
 	) -->
@@ -377,7 +377,7 @@ aux_rest(
 		syn!head!modality!<nec &
 		syn!head!aux!<must &
 		drs!in!drs(Dom, Conds) &
-		drs!out!drs(Dom, [nec(DrsScope) | Conds]) &
+		drs!out!drs(Dom, [obl(DrsScope) | Conds]) &
 		drs!scope!in!drs([], []) &
 		drs!scope!out!DrsScope
 	) -->
@@ -1460,7 +1460,7 @@ sentence_init(
 sentence_init(
 		display!tree![impossibility, 'it is impossible'] &
 		drs!in!drs(Dom, Conds) &
-		drs!out!drs(Dom, [nec(drs([], [-ScopeOut]))|Conds]) &
+		drs!out!drs(Dom, [-drs([], [poss(ScopeOut)])|Conds]) &
 		drs!scope!in!drs([], []) &
 		drs!scope!out!ScopeOut
 	) -->
@@ -1468,17 +1468,17 @@ sentence_init(
 	word_noninitial(is),
 	word_noninitial(impossible).
 
-%sentence_init(
-%		display!tree![unnecessity, 'it is not necessary'] &
-%		drs!in!drs(Dom, Conds) &
-%		drs!out!drs(Dom, [-drs([], [nec(ScopeOut)])|Conds]) &
-%		drs!scope!in!drs([], []) &
-%		drs!scope!out!ScopeOut
-%	) -->
-%	word_capitalize(it, 'It'),
-%	word_noninitial(is),
-%	word_noninitial(not),
-%	word_noninitial(necessary).
+sentence_init(
+		display!tree![unnecessity, 'it is not necessary'] &
+		drs!in!drs(Dom, Conds) &
+		drs!out!drs(Dom, [-drs([], [nec(ScopeOut)])|Conds]) &
+		drs!scope!in!drs([], []) &
+		drs!scope!out!ScopeOut
+	) -->
+	word_capitalize(it, 'It'),
+	word_noninitial(is),
+	word_noninitial(not),
+	word_noninitial(necessary).
 
 %sentence_init(
 %		display!tree![recommendation, 'it is recommended'] &
@@ -1552,7 +1552,7 @@ sentence_init(
 sentence_init(
 		display!tree![prohibition, 'it is prohibited'] &
 		drs!in!drs(Dom, Conds) &
-		drs!out!drs(Dom, [obl(drs([], [-ScopeOut]))|Conds]) &
+		drs!out!drs(Dom, [-drs([], [per(ScopeOut)])|Conds]) &
 		drs!scope!in!drs([], []) &
 		drs!scope!out!ScopeOut
 	) -->
