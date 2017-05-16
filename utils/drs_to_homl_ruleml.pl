@@ -97,24 +97,53 @@ cond_element(drs(Dom1, Conds1) => DRS2,
 	append([Element1], SubElements2, SubElements1),
 	append(VarElements1, [element('Implies', [], SubElements1)], SubElements0).
 
-cond_element(obl(drs(DOM, Cond)), element('Atom', [], 
-  [element('Rel', [modal='http://ruleml.org/1.0/vocab/modal/deontic#Obligatory'], []) | SubElements]))
+  
+%  element('Modal',[],[
+%    element('variety',[],[
+%      element('Box',[],[
+%        element('arg',[],[
+%          element('Const',[],['obl'])])])]),
+%    element('proposition',[],SubElements)])
+  
+  
+cond_element(obl(drs(DOM, Cond)), 
+  element('Modal',[],[
+    element('variety',[],[
+      element('Box',[],[
+        element('arg',[],[
+          element('Const',[],['deontic'])])])]),
+    element('proposition',[],SubElements)]))
   :-
   existdrs_els(drs(DOM, Cond), SubElements).
   
-cond_element(per(drs(DOM, Cond)), element('Atom', [], 
-  [element('Rel', [modal='http://ruleml.org/1.0/vocab/modal/deontic#Permitted'], []) | SubElements]))
+cond_element(per(drs(DOM, Cond)), 
+  element('Modal',[],[
+    element('variety',[],[
+      element('Dia',[],[
+        element('arg',[],[
+          element('Const',[],['deontic'])])])]),
+    element('proposition',[],SubElements)]))
   :-
   existdrs_els(drs(DOM, Cond), SubElements).
 
 
-cond_element(nec(drs(DOM, Cond)), element('Atom', [], 
-  [element('Rel', [modal='http://ruleml.org/1.0/vocab/modal/alethic#Necessary'], []) | SubElements]))
+cond_element(nec(drs(DOM, Cond)), 
+  element('Modal',[],[
+    element('variety',[],[
+      element('Box',[],[
+        element('arg',[],[
+          element('Const',[],['alethic'])])])]),
+    element('proposition',[],SubElements)]))
   :-
   existdrs_els(drs(DOM, Cond), SubElements).
   
-cond_element(poss(drs(DOM, Cond)), element('Atom', [], 
-  [element('Rel', [modal='http://ruleml.org/1.0/vocab/modal/alethic#Possible'], []) | SubElements]))
+cond_element(poss(drs(DOM, Cond)), 
+  element('Modal',[],[
+    element('variety',[],[
+      element('Dia',[],[
+        element('arg',[],[
+          element('Const',[],['alethic'])])])]),
+    element('proposition',[],SubElements)]))
   :-
   existdrs_els(drs(DOM, Cond), SubElements).
 
