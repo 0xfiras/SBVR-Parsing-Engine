@@ -52,6 +52,7 @@ drs_to_ruleml(
 		element('Assert', [], Elements)
 	])
 	) :-
+  numbervars(DRS, 0, End),
 	existdrs_els(DRS, Elements).
 
 
@@ -133,17 +134,19 @@ args_els([], []).
 args_els([H | T], [element('Var', [], [HH]) | ElsTail]) :-
 	var(H),
 	!,
-	term_to_atom(H, HH),
+	term_string(H, HH, [numbervars(true)]),
 	args_els(T, ElsTail).
 
 args_els([H | T], [element('Data', [], [HH]) | ElsTail]) :-
 	number(H),
 	!,
-	term_to_atom(H, HH), % alternatively: atom_number(HH, H)
+	term_string(H, HH, [numbervars(true)]), % alternatively: atom_number(HH, H); original: term_to_atom(H, HH)
 	args_els(T, ElsTail).
 
-args_els([H | T], [element('Ind', [], [H]) | ElsTail]) :-
+args_els([H | T], [element('Ind', [], [HH]) | ElsTail]) :-
+  term_string(H, HH, [numbervars(true)]),
 	args_els(T, ElsTail).
+%term_string(H, HH, [numbervars(true)]),
 
 
 %% existdrs_els(+Drs:drs, -Elements:list) is det.
