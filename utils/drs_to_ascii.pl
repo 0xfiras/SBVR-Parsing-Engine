@@ -141,6 +141,26 @@ write_cond(~DRS, Indent, [(NewIndent,'NAF') | PP]) :-
 	!,
 	NewIndent is Indent+1,
 	write_drs(DRS, NewIndent, PP).
+  
+write_cond(obl(DRS), Indent, [(NewIndent, 'OBL') | PP]) :-
+!,
+NewIndent is Indent+1,
+write_drs(DRS, NewIndent, PP).
+
+write_cond(per(DRS), Indent, [(NewIndent, 'PER') | PP]) :-
+!,
+NewIndent is Indent+1,
+write_drs(DRS, NewIndent, PP).
+
+write_cond(nec(DRS), Indent, [(NewIndent, 'NEC') | PP]) :-
+!,
+NewIndent is Indent+1,
+write_drs(DRS, NewIndent, PP).
+
+write_cond(poss(DRS), Indent, [(NewIndent, 'POSS') | PP]) :-
+!,
+NewIndent is Indent+1,
+write_drs(DRS, NewIndent, PP).
 
 write_cond(can(DRS), Indent, [(NewIndent, 'CAN') | PP]) :-
 	!,
