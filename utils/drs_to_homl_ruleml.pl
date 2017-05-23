@@ -180,22 +180,21 @@ cond_element(Condition-_, element('Atom', [], [element('Rel', [], [Functor]) | E
 
 args_els([], []).
 
-args_els([H | T], [element('Var', [], [HH]) | ElsTail]) :-
-	var(H),
+args_els([H | T], [element('Data', [], [HH]) | ElsTail]) :-
+	number(H),
 	!,
 	term_string(H, HH, [numbervars(true)]),
 	args_els(T, ElsTail).
 
-args_els([H | T], [element('Data', [], [HH]) | ElsTail]) :-
-	number(H),
-	!,
-	term_string(H, HH, [numbervars(true)]), % alternatively: atom_number(HH, H); original: term_to_atom(H, HH)
-	args_els(T, ElsTail).
-
 args_els([H | T], [element('Ind', [], [HH]) | ElsTail]) :-
+  atomic(H),
+  !,
   term_string(H, HH, [numbervars(true)]),
 	args_els(T, ElsTail).
-%term_string(H, HH, [numbervars(true)]),
+
+args_els([H | T], [element('Var', [], [HH]) | ElsTail]) :-
+	term_string(H, HH, [numbervars(true)]),
+	args_els(T, ElsTail).
 
 %% existdrs_els(+Drs:drs, -Elements:list) is det.
 %
