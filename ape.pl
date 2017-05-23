@@ -99,6 +99,7 @@ argument('-chomlruleml', '', 'Output HOML RuleML representation of the DRS.').
 argument('-cfol', '', 'Output standard first-order logic representations (default form) of the DRS as a Prolog term.').
 argument('-cpnf', '', 'Output standard first-order logic representations (prenex normal form) of the DRS as a Prolog term.').
 argument('-ctptp', '', 'Output TPTP representation of the DRS.').
+argument('-cqmltp', '', 'Output QMLTP (an extention of TPTP supporting modalities) representation of the DRS.').
 argument('-uri', 'URI', 'URI for the OWL outputs.').
 argument('-noclex', '', 'Ignore the lexicon entries that are compiled into the executable.').
 argument('-guess', '', 'Guess the word-class of unknown words.').
@@ -436,13 +437,14 @@ parameters([
   chomlruleml(_,  [oneof([on, off]), optional(true)]),
 	cfol(_,         [oneof([on, off]), optional(true)]),
 	ctptp(_,        [oneof([on, off]), optional(true)]),
+  cqmltp(_,       [oneof([on, off]), optional(true)]),
 	solo(_,         [oneof([drs, drsxml, drspp, drshtml,
 					paraphrase, paraphrase1, paraphrase2,
 					tokens, sentences,
 					syntax, syntaxpp, syntaxd, syntaxdpp,
 					owlfss, owlfsspp, owlrdf, owlxml,
 					ruleml, homlruleml,
-					fol, pnf, tptp]), optional(true)])
+					fol, pnf, tptp, qmltp]), optional(true)])
 ]).
 
 http_server :-

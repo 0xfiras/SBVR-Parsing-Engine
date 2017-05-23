@@ -84,6 +84,7 @@ get_ape_results([text='Peeter likes Mary.', solo=owlfss], ContentType, Content).
 :- use_module(ape('utils/tree_utils')).
 :- use_module(ape('utils/trees_to_ascii')).
 :- use_module(ape('utils/drs_to_tptp')).
+:- use_module(ape('utils/drs_to_qmltp')).
 :- use_module(ape('lexicon/clex')).
 :- use_module(ape('lexicon/ulex')).
 :- use_module(ape('parser/ace_to_drs')).
@@ -226,6 +227,7 @@ output_type(homlruleml).
 output_type(fol).
 output_type(pnf).
 output_type(tptp).
+output_type(qmltp).
 
 
 %% get_content(+Input:list, +TempResult:list, -ContentType:atom, -Content:atom) is det.
@@ -413,7 +415,13 @@ get_output(drspp, TempResult, 'text/plain', Output) :-
 get_output(tptp, TempResult, 'text/plain', Output) :-
 	get_value(TempResult, drs, Drs),
 	drs_to_tptp:drs_to_tptplist(Drs, TptpList),
-	with_output_to(atom(Output), tptplist_pp(TptpList)),
+	with_output_to(atom(Output), drs_to_tptp:tptplist_pp(TptpList)),
+    !.
+    
+get_output(qmltp, TempResult, 'text/plain', Output) :-
+	get_value(TempResult, drs, Drs),
+	drs_to_qmltp:drs_to_qmltplist(Drs, TptpList),
+	with_output_to(atom(Output), drs_to_qmltp:qmltplist_pp(TptpList)),
     !.
 
 get_output(drsxml, TempResult, 'text/xml', Output) :-
