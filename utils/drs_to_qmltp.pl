@@ -127,11 +127,36 @@ tptp(
 	conds_tptp(Dom, Conds, NDom, NConds),
 	get_quantifier_expression('?', NDom, NConds, QExpr).
 
-tptp(Dom, predicate(X, be, A, B)-_, NDom, '='(NA, NB)) :-
+%%
+%% Well this modification requires a little bit of explanation:
+%% 1. The previous rule generated and identity '='(A,B), which turned out
+%%    to be problematic, especially when tested on LEO-II after
+%%    QMLTP -> THF -> Embedding
+%% 2. In order to do so, I should unify the A with the property B, because
+%%    this is all what the equality is doing, and most importantly
+%% 3. Remove all references to A (as well as X, which is more obvious), because
+%%    if it's in Dom, it means it has been referenced by (the Dom of) an 
+%%    outer-drs, and I don't need it to be replicated.
+%%
+
+tptp(Dom, predicate(X, be, A, B)-_, NDom, nootin) :-
 	!,
-	exclude(==(X), Dom, NDom),
+	nl,nl,write_term(Dom, [numbervars(true)]),nl,nl,
+	exclude(==(X), Dom, NDom1),
+	unify_stupid_variable(NDom1, A, B),
+	exclude(==(A), NDom1, NDom),
 	arg_to_tptp(A, NA),
 	arg_to_tptp(B, NB).
+
+unify_stupid_variable([H | T], ToKeep, ToReplace) :- 
+    ToReplace \== H,
+    unify_stupid_variable([T], ToKeep, ToReplace).
+
+unify_stupid_variable([H | T], ToKeep, ToReplace) :- 
+    ToReplace == H,
+    !,
+    ToKeep = H.
+
 
 tptp(Dom, object(_, Lemma, _, _, _, _)-_, Dom, $true) :-
 	is_thing(Lemma),
@@ -360,11 +385,27 @@ tptp_pp_('=>'(A, B)) :-
 	format("~n=> ", []),
 	tptp_pp_wrap(B).
 
+tptp_pp_('|'(nootin, A)) :-
+	!,
+	tptp_pp_wrap(A).
+
+tptp_pp_('|'(A, nootin)) :-
+	!,
+	tptp_pp_wrap(A).
+
 tptp_pp_('|'(A, B)) :-
 	!,
 	tptp_pp_wrap(A),
 	format("~n| ", []),
 	tptp_pp_wrap(B).
+
+tptp_pp_('&'(nootin, A)) :-
+	!,
+	tptp_pp_wrap(A).
+
+tptp_pp_('&'(A, nootin)) :-
+	!,
+	tptp_pp_wrap(A).
 
 tptp_pp_('&'(A, B)) :-
 	!,
@@ -379,7 +420,6 @@ tptp_pp_('~'(A)) :-
 
 tptp_pp_(A) :-
 	write_term(A, [numbervars(true), quoted(true)]).
-
 
 tptp_pp_wrap(A) :-
 	write('('),
