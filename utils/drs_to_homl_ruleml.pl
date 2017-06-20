@@ -50,10 +50,30 @@ drs_to_homl_ruleml(
 	element('RuleML', [xmlns='http://ruleml.org/spec'], [
 		element('Assert', [], Elements)
 	])
-	) :-
+) :-
+    DRS = drs(_, X),
   numbervars(DRS, 0, End),
 	existdrs_els(DRS, Elements).
 
+%%
+%% Currently, we conly handle single questions properly.
+%% Having many questions as a single input will ultimately fail.
+%%
+%% It is generally more favourable to submit single sentences to
+%% the parser, whether they are facts, rules, or queries.
+%%
+%%
+drs_to_homl_ruleml(
+	  DRS,
+	  element('RuleML', [xmlns='http://ruleml.org/spec'], [
+		            element('Query', [], Elements)
+	          ])
+) :-
+    write(DRS),nl,nl,
+    DRS = drs([], [question(X)]),
+    write(X), nl, nl,
+    numbervars(X, 0, End),
+	  existdrs_els(X, Elements).
 
 %% conds_and(+Conds:list, -Element:functor) is det.
 %
@@ -97,16 +117,16 @@ cond_element(drs(Dom1, Conds1) => DRS2,
 	append([Element1], SubElements2, SubElements1),
 	append(VarElements1, [element('Implies', [], SubElements1)], SubElements0).
 
-  
+
 %  element('Modal',[],[
 %    element('variety',[],[
 %      element('Box',[],[
 %        element('arg',[],[
 %          element('Const',[],['obl'])])])]),
 %    element('proposition',[],SubElements)])
-  
-  
-cond_element(obl(drs(DOM, Cond)), 
+
+
+cond_element(obl(drs(DOM, Cond)),
   element('Modal',[],[
     element('variety',[],[
       element('Box',[],[
@@ -115,8 +135,8 @@ cond_element(obl(drs(DOM, Cond)),
     element('proposition',[],SubElements)]))
   :-
   existdrs_els(drs(DOM, Cond), SubElements).
-  
-cond_element(per(drs(DOM, Cond)), 
+
+cond_element(per(drs(DOM, Cond)),
   element('Modal',[],[
     element('variety',[],[
       element('Dia',[],[
@@ -127,7 +147,7 @@ cond_element(per(drs(DOM, Cond)),
   existdrs_els(drs(DOM, Cond), SubElements).
 
 
-cond_element(nec(drs(DOM, Cond)), 
+cond_element(nec(drs(DOM, Cond)),
   element('Modal',[],[
     element('variety',[],[
       element('Box',[],[
@@ -136,8 +156,8 @@ cond_element(nec(drs(DOM, Cond)),
     element('proposition',[],SubElements)]))
   :-
   existdrs_els(drs(DOM, Cond), SubElements).
-  
-cond_element(poss(drs(DOM, Cond)), 
+
+cond_element(poss(drs(DOM, Cond)),
   element('Modal',[],[
     element('variety',[],[
       element('Dia',[],[
@@ -180,6 +200,18 @@ cond_element(Condition-_, element('Atom', [], [element('Rel', [], [Functor]) | E
 
 args_els([], []).
 
+%%
+%% Following the comments of Harold Boley, we can treat integers as individuals.
+%% Dealing with complext data like floats is subject to future research.
+%%
+
+args_els([H | T], [element('Ind', [], [HH]) | ElsTail]) :-
+	  integer(H),
+	  !,
+	  term_string(H, HH, [numbervars(true)]),
+	  args_els(T, ElsTail).
+
+
 args_els([H | T], [element('Data', [], [HH]) | ElsTail]) :-
 	number(H),
 	!,
@@ -192,9 +224,19 @@ args_els([H | T], [element('Ind', [], [HH]) | ElsTail]) :-
   term_string(H, HH, [numbervars(true)]),
 	args_els(T, ElsTail).
 
+args_els([H | T], [element('Ind', [], [HH]) | ElsTail]) :-
+    H = named(X),
+    !,
+    atom_string(X, QuotedString),
+    string_lower(QuotedString, Lower),
+    atom_string(Atom, Lower),
+  	term_string(Atom, HH, [numbervars(true)]),
+  	args_els(T, ElsTail).
+
 args_els([H | T], [element('Var', [], [HH]) | ElsTail]) :-
-	term_string(H, HH, [numbervars(true)]),
-	args_els(T, ElsTail).
+	  term_string(H, HH, [numbervars(true)]),
+	  args_els(T, ElsTail).
+
 
 %% existdrs_els(+Drs:drs, -Elements:list) is det.
 %
@@ -208,7 +250,7 @@ existdrs_els(drs(Dom,Conds), [element('Exists', [], Elements)]) :-
 	args_els(Dom, DomElements),
 	conds_and(Conds, Element),
 	append(DomElements, [Element], Elements).
-    
+
 
 %% to_xml(+Elements:list, -Xml:atom) is det.
 %
