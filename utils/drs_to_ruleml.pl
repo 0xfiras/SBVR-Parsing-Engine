@@ -131,6 +131,12 @@ cond_element(Condition-_, element('Atom', [], [element('Rel', [], [Functor]) | E
 
 args_els([], []).
 
+args_els([H | T], [element('Ind', [], [HH]) | ElsTail]) :-
+  integer(H),
+  !,
+  term_string(H, HH, [numbervars(true)]),
+  args_els(T, ElsTail).
+
 args_els([H | T], [element('Data', [], [HH]) | ElsTail]) :-
 	number(H),
 	!,
@@ -142,6 +148,15 @@ args_els([H | T], [element('Ind', [], [HH]) | ElsTail]) :-
   !,
   term_string(H, HH, [numbervars(true)]),
 	args_els(T, ElsTail).
+
+args_els([H | T], [element('Ind', [], [HH]) | ElsTail]) :-
+    H = named(X),
+    !,
+    atom_string(X, QuotedString),
+    string_lower(QuotedString, Lower),
+    atom_string(Atom, Lower),
+  	term_string(Atom, HH, [numbervars(true)]),
+  	args_els(T, ElsTail).
 
 args_els([H | T], [element('Var', [], [HH]) | ElsTail]) :-
 	term_string(H, HH, [numbervars(true)]),
