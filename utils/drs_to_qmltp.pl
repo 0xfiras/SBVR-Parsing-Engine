@@ -46,15 +46,18 @@ drs_to_qmltplist(Drs, TptpList) :-
 % @param Tptp is a TPTP formula
 %
 drs_to_qmltp(drs([], [question(drs(Dom, Conds))]), qmf(conjecture, Expr)) :-
-	!,
-	drs_to_tptp_x(drs(Dom, Conds), Expr).
+	  !,
+%    write(drs(Dom, Conds)), nl, nl,
+	  drs_to_tptp_x(drs(Dom, Conds), Expr).
 
 drs_to_qmltp(drs(Dom, Conds), qmf(axiom, Expr)) :-
 	drs_to_tptp_x(drs(Dom, Conds), Expr).
 
 
 drs_to_tptp_x(drs(Dom, Conds), Expr) :-
-	conds_tptp(Dom, Conds, NDom, NConds),
+	  conds_tptp(Dom, Conds, NDom, NConds),
+%    write(NDom), nl, nl,
+%    write(NConds), nl, nl,
 	get_quantifier_expression('?', NDom, NConds, Expr).
 
 
@@ -74,24 +77,31 @@ get_quantifier_expression(_, [], Expr, Expr) :- !.
 get_quantifier_expression('?', Vars, Expr, ':'('?'(Vars), Expr)).
 get_quantifier_expression('!', Vars, Expr, ':'('!'(Vars), Expr)).
 
-
-
 get_modal_expression('#box', Expr, '#box'(Expr)).
-
+get_modal_expression('#dia', Expr, '#dia'(Expr)).
 
 %% tptp
 %
 tptp(
-	_,
+	UpperDom,
 	obl(drs(Dom1, Conds1)),
-	_,
+	UpperDom,
 	Expr
 ) :-
 	!,
 	drs_to_tptp_x(drs(Dom1, Conds1), Expr1),
-	get_modal_expression('#box', Expr1, Expr)
-  .
+	get_modal_expression('#box', Expr1, Expr).
 
+
+tptp(
+	  UpperDom,
+	  per(drs(Dom1, Conds1)),
+	  UpperDom,
+	  Expr
+) :-
+	  !,
+	  drs_to_tptp_x(drs(Dom1, Conds1), Expr1),
+	  get_modal_expression('#dia', Expr1, Expr).
 
 tptp(
 	UpperDom,
@@ -102,8 +112,10 @@ tptp(
 	!,
 	conds_tptp(Dom1, Conds1, NDom1, NConds1),
 	conds_tptp(Dom2, Conds2, NDom2, NConds2),
-	get_quantifier_expression('?', NDom2, NConds2, Expr2),
-	get_quantifier_expression('!', NDom1, '=>'(NConds1, Expr2), Expr).
+  subtract(NDom1, UpperDom, NNDom1),
+  subtract(NDom2, UpperDom, NNDom2),
+	get_quantifier_expression('?', NNDom2, NConds2, Expr2),
+	get_quantifier_expression('!', NNDom1, '=>'(NConds1, Expr2), Expr).
 
 tptp(
 	UpperDom,
@@ -114,8 +126,10 @@ tptp(
 	!,
 	conds_tptp(Dom1, Conds1, NDom1, NConds1),
 	conds_tptp(Dom2, Conds2, NDom2, NConds2),
-	get_quantifier_expression('?', NDom2, NConds2, Expr2),
-	get_quantifier_expression('?', NDom1, '|'(NConds1, Expr2), Expr).
+  subtract(NDom1, UpperDom, NNDom1),
+  subtract(NDom2, UpperDom, NNDom2),
+	get_quantifier_expression('?', NNDom2, NConds2, Expr2),
+	get_quantifier_expression('?', NNDom1, '|'(NConds1, Expr2), Expr).
 
 tptp(
 	UpperDom,
@@ -125,7 +139,8 @@ tptp(
 ) :-
 	!,
 	conds_tptp(Dom, Conds, NDom, NConds),
-	get_quantifier_expression('?', NDom, NConds, QExpr).
+  subtract(NDom, UpperDom, NNDom),
+	get_quantifier_expression('?', NNDom, NConds, QExpr).
 
 %%
 %% Well this modification requires a little bit of explanation:
@@ -141,18 +156,17 @@ tptp(
 
 tptp(Dom, predicate(X, be, A, B)-_, NDom, nootin) :-
 	!,
-	nl,nl,write_term(Dom, [numbervars(true)]),nl,nl,
 	exclude(==(X), Dom, NDom1),
 	unify_stupid_variable(NDom1, A, B),
-	exclude(==(A), NDom1, NDom),
-	arg_to_tptp(A, NA),
-	arg_to_tptp(B, NB).
+  sort(NDom1, NDom).
 
-unify_stupid_variable([H | T], ToKeep, ToReplace) :- 
+unify_stupid_variable([] , _, _).
+
+unify_stupid_variable([H | T], ToKeep, ToReplace) :-
     ToReplace \== H,
-    unify_stupid_variable([T], ToKeep, ToReplace).
+    unify_stupid_variable(T, ToKeep, ToReplace).
 
-unify_stupid_variable([H | T], ToKeep, ToReplace) :- 
+unify_stupid_variable([H | T], ToKeep, ToReplace) :-
     ToReplace == H,
     !,
     ToKeep = H.
@@ -372,12 +386,19 @@ tptp_pp_(':'('!'(Vars), F)) :-
 	write_term(Vars, [numbervars(true), quoted(true)]),
 	format(" : ", []),
 	tptp_pp_wrap(F).
-  
+
 tptp_pp_('#box'(Expr)) :-
 	!,
 	write_term('#box : ', [quoted(false)]),
   format(" ", []),
 	tptp_pp_wrap(Expr).
+
+tptp_pp_('#dia'(Expr)) :-
+	  !,
+	  write_term('#dia : ', [quoted(false)]),
+    format(" ", []),
+	  tptp_pp_wrap(Expr).
+
 
 tptp_pp_('=>'(A, B)) :-
 	!,
@@ -425,3 +446,18 @@ tptp_pp_wrap(A) :-
 	write('('),
 	tptp_pp_(A),
 	write(')').
+
+
+named_in_List([H|T], H) :-
+    is_named_pred(H),
+    !.
+named_in_List([H|T], I) :-
+    \+ is_named_pred(H),
+    named_in_List(T, I).
+named_in_List([X], X)   :-
+    is_named_pred(X).
+named_in_List([], X)    :-
+    fail.
+is_named_pred(X) :-
+    X = named(Y).
+
